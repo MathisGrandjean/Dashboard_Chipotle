@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-Chipotle Nowcasting Dashboard — Streamlit
-Run with: streamlit run streamlit_dashboard.py
-"""
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import os
 from config import BASE_DIR
-# =====================================================================
-# CONFIG
-# =====================================================================
+
 PATHS = {
     "sec":         BASE_DIR /"chipotle_sec_key_metrics.xlsx",
     "trends":      BASE_DIR /"google_trend_weekly_chipotle_smoothed.xlsx",
@@ -23,7 +18,7 @@ PATHS = {
 COL_RSFSDP = "Advance Retail Sales Food Services yy"
 COL_PPI = "Producer Price Index Meats yy"
 
-# --- Palette ---
+
 C_ORANGE = "#E8590C"
 C_GREEN  = "#7CB342"
 C_GOLD   = "#F2A65A"
@@ -51,7 +46,7 @@ def style_fig(fig, height=400, pct_yaxis=False):
 
 st.set_page_config(page_title="Chipotle Nowcasting", layout="wide")
 
-# --- Custom CSS ---
+
 st.markdown("""
 <style>
     .stApp {
@@ -92,9 +87,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-# =====================================================================
-# LOAD
-# =====================================================================
+
 @st.cache_data
 def load_all():
     sec = pd.read_excel(PATHS["sec"])
@@ -182,9 +175,6 @@ st.caption(
 
 st.divider()
 
-# =====================================================================
-# ROW 1 — Macro vs SEC
-# =====================================================================
 c1, c2 = st.columns(2)
 
 with c1:
@@ -215,9 +205,7 @@ with c2:
 
 st.divider()
 
-# =====================================================================
-# ROW 2 — Google Trends + Job postings
-# =====================================================================
+
 c3, c4 = st.columns(2)
 
 with c3:
