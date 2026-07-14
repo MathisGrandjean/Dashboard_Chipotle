@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Scraper des offres d'emploi Chipotle (jobs.chipotle.com).
-Site server-rendu -> requests + BeautifulSoup, pas besoin de Selenium.
-"""
+
 
 import requests
 from bs4 import BeautifulSoup
