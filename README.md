@@ -18,13 +18,13 @@ Monthly retail sales for the US food-service sector, aggregated to quarterly (su
 Producer Price Index for processed meats, aggregated to quarterly (mean), Y/Y. Proxy for input-cost pressure on Chipotle's food costs. 
 
 **Google Trends**
-Weekly search interest for 4 Chipotle-related queries (`chipotle`, `chipotle delivery`, `chipotle menu`, `chipotle near me`), smoothed with a 3-week rolling average.
+Weekly search interest for 4 Chipotle-related queries in the US (`chipotle`, `chipotle delivery`, `chipotle menu`, `chipotle near me`), smoothed with a 3-week rolling average.
 
 **Open restaurants**
 Restaurant count scraped from Chipotle's official store-locator site across FR, CA, DE, UK, US. Open/closed status is inferred by comparing each day's scraped URLs against the previous snapshot.
 
-**Active job postings & "New Restaurant Opening" postings**
-Postings scraped from jobs.chipotle.com, classified into categories (crew/kitchen ops, management, IT & data, real estate, etc.) via keyword rules. Postings explicitly titled "New Restaurant Opening" are tracked separately as a leading indicator of expansion — they typically appear before a restaurant physically opens.
+**Active job postings**
+Postings scraped from jobs.chipotle.com, classified into categories (crew/kitchen ops, management, IT & data, real estate, etc.) via keyword rules.
 
 ---
 
