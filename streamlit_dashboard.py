@@ -196,7 +196,7 @@ with c1:
     st.plotly_chart(style_fig(fig1, height=420, pct_yaxis=True), use_container_width=True)
 
 with c2:
-    st.subheader("Input cost pressure — US Producer Price Index: Meats y/y (FRED: WPU0221)")
+    st.subheader("Input cost pressure — Producer Price Index: Meats y/y (FRED: WPU0221)")
     fig2 = go.Figure()
     fig2.add_trace(go.Scatter(
         x=macro_plot["quarter"], y=macro_plot[COL_PPI],
@@ -246,7 +246,7 @@ st.subheader("Quarterly indicators summary — FRED macro series vs Chipotle SEC
 
 table = macro_plot[["_sort", "quarter", COL_RSFSDP, COL_PPI, "revenue_yy", "food_cost_yy"]].copy()
 table = table.sort_values("_sort", ascending=False).drop(columns="_sort")
-table.columns = ["Quarter", "US Advance Retail Sales Food Services y/y (FRED)", "US PPI Meats y/y (FRED)",
+table.columns = ["Quarter", "Advance Retail Sales Food Services y/y (FRED)", "PPI Meats y/y (FRED)",
                  "CMG Revenue y/y (SEC)", "CMG Food Cost y/y (SEC)"]
 for col in table.columns[1:]:
     table[col] = table[col].map(lambda x: f"{x:.1%}" if pd.notna(x) else "—")
