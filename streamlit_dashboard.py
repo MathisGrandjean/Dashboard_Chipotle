@@ -7,12 +7,14 @@ import plotly.graph_objects as go
 import os
 from config import BASE_DIR
 
+DATA_DIR = BASE_DIR / "data"
+
 PATHS = {
-    "sec":         BASE_DIR /"chipotle_sec_key_metrics.xlsx",
-    "trends":      BASE_DIR /"google_trend_weekly_chipotle_smoothed.xlsx",
-    "fred":        BASE_DIR /"fred_api_data.xlsx",
-    "restaurants": BASE_DIR / "data_restaurants.xlsx",
-    "jobs":        BASE_DIR /"Chipotle_jobs_all.xlsx",
+    "sec":         DATA_DIR /"chipotle_sec_key_metrics.xlsx",
+    "trends":      DATA_DIR /"google_trend_weekly_chipotle_smoothed.xlsx",
+    "fred":        DATA_DIR /"fred_api_data.xlsx",
+    "restaurants": DATA_DIR / "data_restaurants.xlsx",
+    "jobs":        DATA_DIR /"Chipotle_jobs_all.xlsx",
 }
 
 COL_RSFSDP = "Advance Retail Sales Food Services yy"
