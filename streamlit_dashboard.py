@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import os
 from config import BASE_DIR
 
+
 DATA_DIR = BASE_DIR / "data"
 
 PATHS = {
@@ -17,7 +18,7 @@ PATHS = {
     "jobs":        DATA_DIR /"Chipotle_jobs_all.xlsx",
 }
 
-COL_RSFSDP = "Advance Retail Sales Food Services yy"
+COL_RSFSDP = "US Advance Retail Sales: Food Services and Drinking Places yy"
 COL_PPI = "Producer Price Index Meats yy"
 
 
@@ -211,7 +212,7 @@ st.divider()
 c3, c4 = st.columns(2)
 
 with c3:
-    st.subheader(f"Consumer search interest — Google Trends, weekly, 3-week smoothed (through {last_trends_date})")
+    st.subheader(f"Consumer search interest — Google Trends in the US, weekly, 3-week smoothed (through {last_trends_date})")
     trend_cols = ["chipotle", "chipotle delivery", "chipotle menu", "chipotle near me"]
     fig3 = px.line(trends, x="date", y=trend_cols,
                    color_discrete_sequence=TREND_COLORS)
