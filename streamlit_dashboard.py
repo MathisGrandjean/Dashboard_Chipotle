@@ -18,8 +18,8 @@ PATHS = {
     "jobs":        DATA_DIR /"Chipotle_jobs_all.xlsx",
 }
 
-COL_RSFSDP = "US Advance Retail Sales Food Services yy"
-COL_PPI = "US Producer Price Index Meats yy"
+COL_RSFSDP = "Advance Retail Sales Food Services yy"
+COL_PPI = "Producer Price Index Meats yy"
 
 
 C_ORANGE = "#E8590C"
@@ -246,7 +246,7 @@ st.subheader("Quarterly indicators summary — FRED macro series vs Chipotle SEC
 
 table = macro_plot[["_sort", "quarter", COL_RSFSDP, COL_PPI, "revenue_yy", "food_cost_yy"]].copy()
 table = table.sort_values("_sort", ascending=False).drop(columns="_sort")
-table.columns = ["Quarter", "Advance Retail Sales Food Services y/y (FRED)", "PPI Meats y/y (FRED)",
+table.columns = ["Quarter", "US Retail Sales Food Services y/y (FRED)", "PPI Meats y/y (FRED)",
                  "CMG Revenue y/y (SEC)", "CMG Food Cost y/y (SEC)"]
 for col in table.columns[1:]:
     table[col] = table[col].map(lambda x: f"{x:.1%}" if pd.notna(x) else "—")
