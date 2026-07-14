@@ -86,9 +86,12 @@ st.markdown("""
         border-radius: 10px;
     }
     [data-testid="stCaptionContainer"] { color: #8B92A5; }
+    [data-testid="stTooltipContent"] {
+        background-color: #333333 !important;
+        color: #FFFFFF !important;
+    }
 </style>
 """, unsafe_allow_html=True)
-
 # =====================================================================
 # LOAD
 # =====================================================================
@@ -103,9 +106,6 @@ def load_all():
 
 sec, trends, fred, restaurants, jobs = load_all()
 
-# =====================================================================
-# PREP SEC — unit normalization + chronological sort + Y/Y
-# =====================================================================
 def normalize_units(series, threshold=10_000_000):
     """SEC file mixes dollars and thousands of dollars across years."""
     return series.where(series <= threshold, series / 1000)
@@ -124,9 +124,6 @@ sec["food_cost_k"] = normalize_units(sec["Food, Beverage and Packaging Cost"])
 sec["revenue_yy"] = sec["revenue_k"].pct_change(4)
 sec["food_cost_yy"] = sec["food_cost_k"].pct_change(4)
 
-# =====================================================================
-# PREP FRED + merge
-# =====================================================================
 fred["_sort"] = fred["quarter"].apply(quarter_sort_key)
 fred = fred.sort_values("_sort")
 
@@ -137,9 +134,7 @@ macro = fred.merge(
 
 macro_plot = macro[macro["_sort"] >= pd.Period("2020Q3")]
 
-# =====================================================================
-# PREP restaurants + jobs — with data freshness dates
-# =====================================================================
+
 n_restaurants_open = (restaurants["status"].str.lower() == "open").sum()
 last_rest_scrape = pd.to_datetime(
     restaurants["last_confirmed_open_date"].max(), format="%Y%m%d"
@@ -155,9 +150,7 @@ last_trends_date = pd.to_datetime(trends["date"].max()).strftime("%b %d, %Y")
 last_fred_quarter = macro_plot["quarter"].iloc[-1]
 last_sec_quarter = sec.dropna(subset=["revenue_yy"])["quarter_label"].iloc[-1]
 
-# =====================================================================
-# HEADER + KPI CARDS
-# =====================================================================
+
 st.title("Chipotle Nowcasting Dashboard")
 st.caption(
     "Tracking Chipotle (CMG) quarterly revenue growth ahead of earnings, using alternative data "
@@ -171,16 +164,13 @@ k1.metric("Open restaurants",
 k2.metric("Active job postings",
           f"{len(jobs_active):,}",
           help=f"Scraped from jobs.chipotle.com — last update: {last_jobs_scrape}")
-k3.metric("'New Restaurant Opening' postings",
-          f"{n_nro:,}",
-          help=f"Direct expansion signal — last update: {last_jobs_scrape}")
+
 last_rev = macro["revenue_yy"].dropna().iloc[-1] if macro["revenue_yy"].notna().any() else None
 k4.metric("Latest Revenue Y/Y (SEC)",
           f"{last_rev:.1%}" if last_rev is not None else "n/a",
           help=f"From SEC quarterly filings — latest quarter: {last_sec_quarter}")
 
 st.caption(
-    f"Data freshness — Restaurants: {last_rest_scrape} · Job postings: {last_jobs_scrape} · "
     f"Google Trends: {last_trends_date} · FRED macro: {last_fred_quarter} · SEC filings: {last_sec_quarter}"
 )
 
@@ -192,11 +182,11 @@ st.divider()
 c1, c2 = st.columns(2)
 
 with c1:
-    st.subheader("Sector demand vs Chipotle revenue — US Food Services retail sales y/y (FRED: RSFSDP) vs CMG Food & Beverage revenue y/y (SEC filings)")
+    st.subheader("Sector demand vs Chipotle revenue — US Advance Retail Sales: Food Services and Drinking Places y/y (FRED: RSFSDP) vs CMG Food & Beverage revenue y/y (SEC filings)")
     fig1 = go.Figure()
     fig1.add_trace(go.Scatter(
         x=macro_plot["quarter"], y=macro_plot[COL_RSFSDP],
-        name="US Retail Sales: Food Services y/y (FRED)",
+        name="US Advance Retail Sales: Food Services and Drinking Places y/y (FRED)",
         line=dict(color=C_ORANGE, width=3)
     ))
     fig1.add_trace(go.Scatter(
@@ -254,9 +244,7 @@ with c4:
 
 st.divider()
 
-# =====================================================================
-# ROW 3 — Quarterly summary table (chronological, most recent first)
-# =====================================================================
+
 st.subheader("Quarterly indicators summary — FRED macro series vs Chipotle SEC-reported figures")
 
 table = macro_plot[["_sort", "quarter", COL_RSFSDP, COL_PPI, "revenue_yy", "food_cost_yy"]].copy()
