@@ -150,21 +150,27 @@ last_trends_date = pd.to_datetime(trends["date"].max()).strftime("%b %d, %Y")
 last_fred_quarter = macro_plot["quarter"].iloc[-1]
 last_sec_quarter = sec.dropna(subset=["revenue_yy"])["quarter_label"].iloc[-1]
 
+last_sec_restaurants = (
+    sec["Total Restaurants"].dropna().iloc[-1]
+    if "Total Restaurants" in sec.columns and sec["Total Restaurants"].notna().any()
+    else None
+)
 
 st.title("Chipotle Nowcasting Dashboard")
 st.caption(
     "Tracking Chipotle (CMG) quarterly revenue growth ahead of earnings, using alternative data "
     "(restaurant locations, job postings, Google Trends) and macro indicators (FRED retail sales, commodity prices)."
 )
-
 k1, k2, k3, k4 = st.columns(4)
-k1.metric("Open restaurants",
+k1.metric("Open restaurants (live)",
           f"{n_restaurants_open:,}",
           help=f"Scraped from locations.chipotle.com — last update: {last_rest_scrape}")
-k2.metric("Active job postings",
+k2.metric("Total restaurants (SEC)",
+          f"{last_sec_restaurants:,.0f}" if last_sec_restaurants is not None else "n/a",
+          help=f"From SEC quarterly filings — latest quarter: {last_sec_quarter}")
+k3.metric("Active job postings",
           f"{len(jobs_active):,}",
           help=f"Scraped from jobs.chipotle.com — last update: {last_jobs_scrape}")
-
 last_rev = macro["revenue_yy"].dropna().iloc[-1] if macro["revenue_yy"].notna().any() else None
 k4.metric("Latest Revenue Y/Y (SEC)",
           f"{last_rev:.1%}" if last_rev is not None else "n/a",
