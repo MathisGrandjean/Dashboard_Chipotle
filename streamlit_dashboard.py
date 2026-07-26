@@ -213,7 +213,7 @@ c3, c4 = st.columns(2)
 
 with c3:
     st.subheader(f"Consumer search interest — Google Trends, weekly, 3-week smoothed (through {last_trends_date})")
-    trend_cols = ["chipotle", "chipotle delivery", "chipotle menu", "chipotle near me"]
+    trend_cols = ["chipotle", "chipotle menu", "chipotle near me"]
     fig3 = px.line(trends, x="date", y=trend_cols,
                    color_discrete_sequence=TREND_COLORS)
     fig3.update_traces(line_width=2)
