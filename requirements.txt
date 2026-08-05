@@ -1,4 +1,4 @@
-streamlit
+streamlit==1.51.0
 plotly
 pandas
 numpy
@@ -6,3 +6,4 @@ openpyxl
 fredapi
 pytrends
 python-dotenv
+starlette==0.47.2
