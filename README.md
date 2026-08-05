@@ -2,7 +2,7 @@
 
 A dashboard tracking Chipotle's quarterly revenue growth ahead of earnings releases, combining alternative data (web scraping) and macro data (APIs).
 
-**Live:** https://dashboardchipotle-y2dbhyneuysvme8uwdn7br.streamlit.app/
+**Live:** https://dashboardchipotle-vn6f9jxaflmjqxmzfdbc5s.streamlit.app/
 
 ---
 
